@@ -63,15 +63,52 @@
             left: 47%;
             z-index: 3;
         }
+
+        .disappear {
+            display: none;
+        }
+
+        #stopwatch {
+            position: absolute;
+            left: 23%;
+            top: 300px;
+            width: 500px;
+        }
+
+        button {
+            background: black;
+            color: white;
+            border-radius: 5%;
+            width: 150px;
+            height: 60px;
+            margin: 3px 5px;
+        }
+
+        button:hover {
+            background: lightgray;
+        }
+
+        /* .show {
+            display: block;
+        } */
     </style>
 </head>
 <body>
     <div id="clock">
         <div class="dot"></div>
-        <div class="displayTime"><h1></h1> </div>
+        <div id="clocktime" class="displayTime"><h1></h1></div>
+        <div id="stopwatchdisplay" class="displayTime"><h1>00 : 00 : 00</h1></div>
         <div id = "hour" class = "position"></div>
         <div id = "minute" class = "position"></div>
         <div id = "second" class = "position"></div>
+
+        <button class="changemode">更改模式</button>
+
+        <div id="stopwatch">
+            <button id="start">開始計時</button>
+            <button id="stop">暫停計時</button>
+            <button id="reset">重設</button>
+        </div>
     </div>
     <script>
         const content = document.querySelector("h1");
@@ -79,6 +116,12 @@
         const minute = document.getElementById("minute");
         const second = document.getElementById("second");
         const clock = document.getElementById("clock");
+        const startBtn = document.querySelector("#start");
+        const stopBtn = document.querySelector("#stop");
+        const resetBtn = document.querySelector("#reset");
+        const stopWatchDisplay = document.querySelector("#stopwatchdisplay").firstChild;
+        const changeMode = document.querySelector(".changemode");
+        const displayArea = document.querySelector("#clocktime");
         
         function update() {
             let currentTime = new Date();
@@ -102,6 +145,44 @@
         
         setInterval(update, 1000)
         update();
+        
+        stopWatchDisplay.classList.add("disappear");
+        
+        changeMode.onclick = function() {
+            displayArea.classList.toggle("disappear");
+            stopWatchDisplay.classList.toggle("disappear");
+        }
+
+        let setMilliSeconds = 0;
+        let setSeconds = 0;
+        let setMinutes = 0;
+      
+        function timeCount() {
+            setMilliSeconds++;
+            if(setMilliSeconds > 99) {
+            setSeconds++;
+            setMilliSeconds = 0;
+            if(setSeconds > 59) {
+                setMinutes++;
+                setSeconds = 0;
+                }
+            }
+            stopWatchDisplay.textContent = `${setMinutes} : ${setSeconds} : ${setMilliSeconds}`;
+        }
+      
+        startBtn.addEventListener("click", () => {
+            let myInterval = setInterval(timeCount, 1);
+        
+            stopBtn.addEventListener("click", () => {
+            clearInterval(myInterval) 
+            });
+
+        })
+      
+        resetBtn.addEventListener("click", () => {
+            stopWatchDisplay.textContent = "00 : 00 : 00";
+        })
+      
     </script>
 </body>
 </html>

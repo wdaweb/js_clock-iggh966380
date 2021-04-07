@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .container {
+            width: 960px;
+            height: auto;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        header {
+            display: flex;
+            background: white;
+            box-shadow: 2px 2px 2px black;
+            width: auto;
+        }
+
+        h1 {
+            background: black;
+            color: white;
+            text-align: center;
+            font-size: 30px;
+            border-radius: 20px;
+            padding: 10px;
+            position: absolute;
+            top: 50%;
+            left: 36%;
+        }
+
+        .changeColorBtn {
+            background: unset;
+            width: 200px;
+            font-size: 30px;
+            position: absolute;
+            border-radius: 20px;
+            top: 65%;
+            left: 45%;
+            transition: 0.5s;
+        }
+
+        .changeColorBtn:hover {
+            background: black;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+
+            <h2>Color Flipper</h2>
+            <div class="type-ul">
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>Background Color: rgb(255, 255, 255)</h1>
+        <button class="changeColorBtn">Click Me</button>
+    </main>
+
+    <script>
+        const changeColorBtn = document.querySelector("button")
+        const backgroundColorText = document.querySelector("h1")
+        const hex = [0, 1, 2, 3, 4, 5, 6, 7, 8, "A", "B", "C", "D", "E", "F"];
+        function generatingRandNum(min, max) {
+            return Math.floor((Math.random() * max) + min)
+        }
+
+        changeColorBtn.onclick = function () {
+            if (generatingRandNum(0, 2) === 0) {
+                document.body.style.backgroundColor = `rgb(${generatingRandNum(0, 255)}, ${generatingRandNum(0, 255)}, ${generatingRandNum(0, 255)})`;
+                backgroundColorText.textContent = `Background Color: ${document.body.style.backgroundColor}`;
+            } else if (generatingRandNum(0, 2) === 1) {
+                document.body.style.backgroundColor = `#${hex[generatingRandNum(0, 15)]}${hex[generatingRandNum(0, 15)]}${hex[generatingRandNum(0, 15)]}${hex[generatingRandNum(0, 15)]}${hex[generatingRandNum(0, 15)]}${hex[generatingRandNum(0, 15)]}`
+                backgroundColorText.textContent = `Background Color: #${hex[generatingRandNum(0, 15)]}${hex[generatingRandNum(0, 15)]}${hex[generatingRandNum(0, 15)]}${hex[generatingRandNum(0, 15)]}${hex[generatingRandNum(0, 15)]}${hex[generatingRandNum(0, 15)]}`;
+            }
+        }
+    </script>
+</body>
+
+</html>
